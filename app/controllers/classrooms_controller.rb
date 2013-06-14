@@ -8,6 +8,12 @@ class ClassroomsController < ApplicationController
 
   def create
     @classroom = Classroom.create(params[:classroom])
-    redirect_to @classroom if @classroom
+    respond_with @classroom
+  end
+
+  def update
+    @classroom = Classroom.find(params[:id])
+    @classroom.update_attributes(params[:classroom])
+    respond_with @classroom
   end
 end

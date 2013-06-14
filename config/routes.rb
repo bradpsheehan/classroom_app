@@ -1,4 +1,5 @@
 ClassroomApp::Application.routes.draw do
-
-  resources :classrooms
+  scope "/teachers/:teacher_id" do
+    resources :classrooms
+  end
 end
