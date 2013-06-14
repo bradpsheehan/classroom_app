@@ -16,6 +16,7 @@ group :assets do
 end
 
 group :test do
+  gem 'pry'
   gem 'sqlite3'
   gem 'vcr', '~> 2.5.0'
   gem 'fakeweb', '~> 1.3.0'

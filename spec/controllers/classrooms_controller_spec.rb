@@ -2,14 +2,6 @@ require 'spec_helper'
 
 describe ClassroomsController do
 
-  describe "GET #show" do
-    it "assigns the requested classroom to @classroom" do
-      classroom = Classroom.create(teacher_id: 1, name: "English 101")
-      get :show, id: classroom, teacher_id: 1
-      assigns(:classroom).should eq(classroom)
-    end
-  end
-
   describe "POST #create" do
 
     context "with valid attributes" do
@@ -32,6 +24,20 @@ describe ClassroomsController do
         Classroom.should_receive(:create).with(params).and_return(nil)
         post :create, {:teacher_id => 1, :classroom => {name: "English 101"}}
       end
+    end
+  end
+
+  describe "GET #show" do
+    it "assigns the requested classroom to @classroom" do
+      classroom = Classroom.create(teacher_id: 1, name: "English 101")
+      get :show, id: classroom, teacher_id: 1, format: :json
+      assigns(:classroom).should eq(classroom)
+      json_response = JSON.parse(response.body).with_indifferent_access
+
+      expect(json_response[:name]).to eq("English 101")
+      expect(json_response[:teacher_id]).to eq(1)
+      expect(json_response[:created_at]).to be_nil
+      expect(json_response[:updated_at]).to be_nil
     end
   end
 

@@ -17,14 +17,14 @@ describe Classroom do
   end
 
   context "with missing information" do
-    it "is invalid without a teacher id" do
+    it "has an error without a teacher id" do
       classroom = Classroom.new(name: "english")
-      expect(classroom).to_not be_valid
+      expect(classroom).to have(1).error_on(:teacher_id)
     end
 
-    it "is invalid without a name" do
+    it "has an error without a name" do
       classroom = Classroom.new(teacher_id: 1)
-      expect(classroom).to_not be_valid
+      expect(classroom).to have(1).error_on(:name)
     end
   end
 end
