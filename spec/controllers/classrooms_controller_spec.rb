@@ -53,7 +53,6 @@ describe ClassroomsController do
     context "given valid attributes" do
       it "updates a classroom" do
         classroom = Classroom.create(teacher_id: 1, name: "Math 101")
-        classroom.name = "English 101"
         params = {"name" => "English 101"}
 
         put :update, {
@@ -62,11 +61,28 @@ describe ClassroomsController do
                       :classroom => params,
                       format: :json
                      }
-
         # binding.pry
         json_response = JSON.parse(response.body).with_indifferent_access
 
         expect(json_response[:name]).to eq("English 101")
+      end
+    end
+
+    context "given invalid attributes" do
+      it "has errors" do
+        classroom = Classroom.create(teacher_id: 1, name: "Math 101")
+        params = {"name" => ""}
+
+        put :update, {
+                      :teacher_id => 1,
+                      :id => classroom.id,
+                      :classroom => params,
+                      format: :json
+                     }
+        # binding.pry
+        json_response = JSON.parse(response.body).with_indifferent_access
+
+        expect(json_response[:errors]).to eq({"name"=>["can't be blank"]})
       end
     end
   end

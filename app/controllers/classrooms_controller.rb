@@ -19,9 +19,16 @@ class ClassroomsController < ApplicationController
 
   def update
     @classroom = Classroom.find(params[:id])
-    @classroom.update_attributes(params[:classroom])
-    respond_to do |format|
-      format.json { render :json => @classroom }
+
+    json_response = if @classroom.update_attributes(params[:classroom])
+      {:json => @classroom}
+    else
+      {:json => @classroom, :methods => :errors}
     end
+
+    respond_to do |format|
+      format.json { render json_response }
+    end
+
   end
 end

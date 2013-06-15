@@ -22,6 +22,11 @@ describe Classroom do
       expect(classroom).to have(1).error_on(:teacher_id)
     end
 
+    it "has an error with a blank name" do
+      classroom = Classroom.new(teacher_id: 1, name: "")
+      expect(classroom).to have(1).error_on(:name)
+    end
+
     it "has an error without a name" do
       classroom = Classroom.new(teacher_id: 1)
       expect(classroom).to have(1).error_on(:name)
