@@ -11,14 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130616174254) do
+ActiveRecord::Schema.define(:version => 20130616183027) do
+
+  create_table "classroom_students", :force => true do |t|
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "classroom_id"
+    t.integer  "student_id"
+  end
+
+  add_index "classroom_students", ["classroom_id"], :name => "index_classroom_students_on_classroom_id"
 
   create_table "classrooms", :force => true do |t|
     t.integer  "teacher_id"
     t.string   "name"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
-    t.text     "students",   :default => "--- []\n"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end

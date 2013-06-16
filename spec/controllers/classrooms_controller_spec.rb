@@ -7,11 +7,12 @@ describe ClassroomsController do
 #TODO CHANGE STUBS TO ACTUALLY HIT THE DB
     context "with valid attributes" do
       it "saves the new classroom in the database" do
-        params = {name: "English 101", teacher_id: 1}
+        params = {name: "English 101", teacher_id: 1, students: [1,2,3]}
         post :create, {:teacher_id => 1, :classroom => params, format: :json}
         json_response = JSON.parse(response.body).with_indifferent_access
 
         expect(json_response[:name]).to eq("English 101")
+        expect(json_response[:students]).to eq([1, 2, 3])
         expect(json_response[:teacher_id]).to eq(1)
         expect(json_response[:created_at]).to be_nil
         expect(json_response[:updated_at]).to be_nil
@@ -42,6 +43,7 @@ describe ClassroomsController do
       json_response = JSON.parse(response.body).with_indifferent_access
 
       expect(json_response[:name]).to eq("English 101")
+      expect(json_response[:students]).to eq([])
       expect(json_response[:teacher_id]).to eq(1)
       expect(json_response[:created_at]).to be_nil
       expect(json_response[:updated_at]).to be_nil
