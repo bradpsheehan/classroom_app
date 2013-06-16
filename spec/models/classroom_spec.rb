@@ -32,4 +32,38 @@ describe Classroom do
       expect(classroom).to have(1).error_on(:name)
     end
   end
+
+  context "adding students" do
+    it "can add students" do
+      classroom = Classroom.create(teacher_id: 1, name: "english", students: [1, 2, 3])
+      classroom.add_students(4, 5)
+      expect(classroom.students).to eq([1, 2, 3, 4, 5])
+    end
+
+    it "doesn't add duplicate students" do
+      classroom = Classroom.create(teacher_id: 1, name: "english", students: [1, 2, 3])
+      classroom.add_students(3, 4, 5)
+      expect(classroom.students).to eq([1, 2, 3, 4, 5])
+    end
+
+    it "adds students if no students exist yet" do
+      classroom = Classroom.new(teacher_id: 1, name: "Social Studies")
+      classroom.add_students(1, 2)
+      expect(classroom.students).to eq([1, 2])
+    end
+  end
+
+  context "removing students" do
+    it "can remove students" do
+      classroom = Classroom.create(teacher_id: 1, name: "math", students: [1, 2, 3])
+      classroom.remove_students(1, 3)
+      expect(classroom.students).to eq([2])
+    end
+
+    it "doesn't break when there are no students" do
+      classroom = Classroom.new(teacher_id: 1, name: "Social Studies")
+      classroom.remove_students(1, 2)
+      expect(classroom.students).to eq([])
+    end
+  end
 end

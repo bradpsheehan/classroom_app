@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130612222330) do
+ActiveRecord::Schema.define(:version => 20130616174254) do
 
   create_table "classrooms", :force => true do |t|
     t.integer  "teacher_id"
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.text     "students",   :default => "--- []\n"
   end
 
 end

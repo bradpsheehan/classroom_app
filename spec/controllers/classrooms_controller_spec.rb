@@ -61,7 +61,6 @@ describe ClassroomsController do
                       :classroom => params,
                       format: :json
                      }
-        # binding.pry
         json_response = JSON.parse(response.body).with_indifferent_access
 
         expect(json_response[:name]).to eq("English 101")
@@ -79,7 +78,6 @@ describe ClassroomsController do
                       :classroom => params,
                       format: :json
                      }
-        # binding.pry
         json_response = JSON.parse(response.body).with_indifferent_access
 
         expect(json_response[:errors]).to eq({"name"=>["can't be blank"]})
